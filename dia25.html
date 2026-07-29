@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día 25 - El Jardín de tus Colores 🌸</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf2f8; 
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .contenedor {
+            background-color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 40px auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #db2777;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p.intro {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .tarjeta-hortensia {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-sizing: border-box;
+        }
+
+        .tarjeta-hortensia:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .azul { background-color: #e0f2fe; color: #0369a1; }
+        .blanca { background-color: #f8fafc; color: #475569; border: 1px solid #e2e8f0; }
+        .rosa { background-color: #fce7f3; color: #be185d; }
+        .regalo-final { 
+            background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%); 
+            color: #831843; 
+            font-weight: 600;
+            border: 2px dashed #db2777;
+        }
+
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto; 
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            animation: aparecer 0.4s ease-out;
+            text-align: center;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+        }
+
+        .close:hover, .close:focus { color: #333; text-decoration: none; }
+
+        canvas {
+            background-color: transparent;
+            margin: 0 auto 15px auto;
+            display: block;
+            border-radius: 15px;
+        }
+
+        .modal h2 { margin-top: 0; }
+        .modal p.mensaje { font-size: 16px; line-height: 1.6; color: #555; font-style: italic; }
+        
+        .foto-pareja-placeholder {
+            width: 100%;
+            height: 120px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .petalo {
+            position: fixed;
+            top: -20px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: caer linear infinite;
+        }
+
+        @keyframes caer {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
+        }
+
+        .btn-volver {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #f3f4f6;
+            color: #374151;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .btn-volver:hover { background-color: #e5e7eb; }
+    </style>
+</head>
+<body>
+
+    <!-- REPRODUCTOR DE MÚSICA OCULTO -->
+    <audio id="musicaFondo" src="btss.mp3" loop style="display: none;"></audio>
+
+    <div class="contenedor">
+        <h1>🌸 El Jardín de tus Colores</h1>
+        <p class="intro">Cada una de estas flores representa la maravillosa persona que eres. ¿Recuerdas que me dijiste que te gustan las hortensias y que tus colores favoritos son el azul, el blanco y el rosa? Toca cada tarjeta para descubrir.</p>
+        
+        <button class="tarjeta-hortensia azul" onclick="abrirModal('modalAzul')">
+            💙 <strong>Hortensia Azul:</strong> Significa gratitud y belleza, exactamente lo que aportas a mi vida.
+        </button>
+
+        <button class="tarjeta-hortensia blanca" onclick="abrirModal('modalBlanca')">
+            🤍 <strong>Hortensia Blanca:</strong> Significa pureza, paz y un amor incondicional y sincero.
+        </button>
+
+        <button class="tarjeta-hortensia rosa" onclick="abrirModal('modalRosa')">
+            💖 <strong>Hortensia Rosa:</strong> Significa romance y emociones sinceras y verdaderas.
+        </button>
+
+        <!-- TARJETA DEL DÍA 25 / REGALO FINAL (Con reproducción de música al hacer clic) -->
+                <p class="intro">Y por fin llegamos al día 25, el momento en que todas las piezas que has leído se unen para formar un solo mensaje: ¡Feliz cumpleaños, eres una mujer increíble y mi vida es infinitamente mejor desde que estás en ella! 🎂🎉
+
+Si juntas todas las palabras de este recorrido, te darás cuenta de que cada una lleva impregnada la más sincera admiración, el cariño más puro y el deseo gigante de verte feliz hoy y siempre. Llegaste a cambiar mis días, a ponerle color a mis rutinas y a recordarme lo bonito que es conectar de verdad con alguien. 🌟
+
+Que este nuevo año de vida te traiga tanta felicidad como la que tú derramas a tu paso, que cada uno de tus sueños esté más cerca de cumplirse y que sepas, hoy y todos los días, que eres sumamente especial para mí. Disfruta tu día al máximo, sonríe muchísimo y déjate consentir como te lo mereces. ¡Te quiero y felicidades en tu día! 🥂🌷💖🎈</p>
+
+
+        <br>
+        <a href="index.html" class="btn-volver">← Volver al Calendario Principal</a>
+        </div>
+
+    <!-- Modales -->
+    <div id="modalAzul" class="modal">
+    <div class="modal-content" style="border-top: 8px solid #e0f2fe;">
+        <span class="close" onclick="cerrarModal('modalAzul')">&times;</span>
+        <canvas id="canvasAzul" width="300" height="300"></canvas>
+        <h2 style="color: #0369a1;">Gratitud y Belleza 💙</h2>
+        <p class="mensaje">"Agradezco cada día tenerte en mi vida. Eres tan hermosa por dentro como por fuera, y tu luz ilumina todos mis días."</p>
+        <div style="margin: 20px 0;">
+            <video src="25-1.mp4" autoplay muted controls style="max-width: 100%; height: auto; border-radius: 12px;"></video>
+        </div>
+    </div>
+</div>
+
+<div id="modalBlanca" class="modal">
+    <div class="modal-content" style="border-top: 8px solid #cbd5e1;">
+        <span class="close" onclick="cerrarModal('modalBlanca')">&times;</span>
+        <canvas id="canvasBlanca" width="300" height="300"></canvas>
+        <h2 style="color: #475569;">Paz y Pureza 🤍</h2>
+        <p class="mensaje">"A tu lado encuentro la paz que siempre busqué. Estar a tu lado es mi refugio más seguro y el sentimiento más puro que he conocido."</p>
+        <div style="margin: 20px 0;">
+            <video src="25-2.mp4" autoplay muted controls style="max-width: 100%; height: auto; border-radius: 12px;"></video>
+        </div>
+    </div>
+</div>
+
+<div id="modalRosa" class="modal">
+    <div class="modal-content" style="border-top: 8px solid #fce7f3;">
+        <span class="close" onclick="cerrarModal('modalRosa')">&times;</span>
+        <canvas id="canvasRosa" width="300" height="300"></canvas>
+        <h2 style="color: #be185d;">Romance y Verdad 💖</h2>
+        <p class="mensaje">"Te amo y quiero con un corazón sincero. Cada momento a tu lado se queda grabado en mi alma. Feliz cumpleaños, mi pastelito."</p>
+        <div style="margin: 20px 0;">
+            <video src="25-3.mp4" autoplay muted controls style="max-width: 100%; height: auto; border-radius: 12px;"></video>
+        </div>
+    </div>
+</div>
+
+<script>
+    function cerrarModal(idModal) {
+        var modal = document.getElementById(idModal);
+        modal.style.display = "none";
+        
+        // Detiene y reinicia el video para liberar el reproductor
+        var video = modal.querySelector("video");
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
+    }
+</script>
+
+    <div id="modalRegalo25" class="modal">
+        <div class="modal-content" style="border-top: 8px solid #db2777;">
+            <span class="close" onclick="cerrarModal('modalRegalo25')">&times;</span>
+            <h2 style="color: #db2777;">✨ ¡Tu Regalo Final del Día 25! ✨</h2>
+            <p class="mensaje">"Has llegado al final de este pequeño jardín virtual. Cada día a tu lado es un regalo, y hoy celebro tu vida con todo mi corazón. ¡Feliz cumpleaños, mi amor!"</p>
+            <div class="foto-pareja-placeholder">[ 📸 Foto especial o sorpresa final ]</div>
+        </div>
+    </div>
+
+    <script>
+        function dibujarHortensia(canvasId, colorBase, colorSombra) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2 - 20;
+
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.quadraticCurveTo(cx - 10, cy + 80, cx, canvas.height);
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = '#4ade80';
+            ctx.stroke();
+
+            dibujarHoja(ctx, cx, cy + 60, -30, '#22c55e');
+            dibujarHoja(ctx, cx, cy + 90, 40, '#16a34a');
+
+            const radioMax = 85; 
+            const totalFlorecitas = 250; 
+
+            for (let i = 0; i < totalFlorecitas; i++) {
+                const angulo = Math.random() * Math.PI * 2;
+                const radio = Math.sqrt(Math.random()) * radioMax; 
+                const x = cx + radio * Math.cos(angulo);
+                const y = cy + radio * Math.sin(angulo);
+                const rotacion = Math.random() * Math.PI;
+                const escala = 0.8 + Math.random() * 0.4;
+                const colorActual = (Math.random() > 0.4) ? colorBase : colorSombra;
+                dibujarFlorPequeña(ctx, x, y, rotacion, escala, colorActual);
+            }
+        }
+
+        function dibujarHoja(ctx, x, y, anguloG, color) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(anguloG * Math.PI / 180);
+            ctx.beginPath();
+            ctx.ellipse(35, 0, 35, 15, 0, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(65, 0);
+            ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function dibujarFlorPequeña(ctx, x, y, rotacion, escala, color) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotacion);
+            ctx.scale(escala, escala);
+            ctx.fillStyle = color;
+            ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+            ctx.lineWidth = 1;
+
+            for (let j = 0; j < 4; j++) {
+                ctx.rotate(Math.PI / 2);
+                ctx.beginPath();
+                ctx.ellipse(9, 0, 9, 6, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            ctx.beginPath();
+            ctx.arc(0, 0, 2, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+            ctx.fill();
+            ctx.restore();
+        }
+
+        window.onload = function() {
+            dibujarHortensia('canvasAzul', '#60a5fa', '#2563eb');
+            dibujarHortensia('canvasBlanca', '#ffffff', '#e2e8f0');
+            dibujarHortensia('canvasRosa', '#f472b6', '#db2777');
+        }
+
+        function abrirModal(idModal) {
+            document.getElementById(idModal).style.display = "block";
+        }
+
+        function cerrarModal(idModal) {
+            document.getElementById(idModal).style.display = "none";
+        }
+
+        function reproducirMusicaYAbrirModal(idModal) {
+            const audio = document.getElementById('musicaFondo');
+            if (audio) {
+                audio.play().catch(e => {
+                    console.log("El navegador bloqueó la reproducción automática, requiere interacción previa.");
+                });
+            }
+            abrirModal(idModal);
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+
+        function crearPetalo() {
+            const petalo = document.createElement('div');
+            petalo.classList.add('petalo');
+            petalo.style.borderRadius = Math.random() < 0.5 ? '0% 50% 50% 50%' : '50% 0% 50% 50%';
+            const colores = ['#aedff7', '#ffffff', '#fce4ec', '#f472b6'];
+            petalo.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
+            const size = Math.random() * 10 + 5 + 'px';
+            petalo.style.width = size;
+            petalo.style.height = size;
+            petalo.style.left = Math.random() * 100 + 'vw';
+            petalo.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            document.body.appendChild(petalo);
+            setTimeout(() => { petalo.remove(); }, 8000);
+        }
+        
+        setInterval(crearPetalo, 400);
+    </script>
+</body>
+</html>

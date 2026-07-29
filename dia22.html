@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día 22 - Sorpresa 🌸</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf2f8;
+            color: #333;
+            text-align: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .tarjeta {
+            background: white;
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-top: 8px solid #db2777;
+        }
+        h1 { color: #db2777; font-size: 26px; }
+        p { font-size: 16px; color: #555; line-height: 1.6; font-style: italic; margin: 20px 0; }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #db2777;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .btn:hover { background-color: #be185d; }
+    </style>
+</head>
+<body>
+    <div class="tarjeta">
+        <h1>✨ Sorpresa del Día 22 🌅 ✨</h1>
+        <p>"El tiempo sigue avanzando, y hoy miro el camino recorrido en estos 22 días con una enorme sonrisa. 🌅 Cada fragmento que has leído es solo un reflejo diminuto de lo mucho que significas para mí y de la profunda admiración que te tengo. Eres una obra de arte andando, una mezcla perfecta de fuerza, ternura y brillantez que merece celebrar su vida por todo lo alto. Ya casi llegamos al final de este viaje de palabras. ☕✨"</p>
+
+        <div style="margin: 20px 0;">
+    <img src="22.jpg" alt="Sorpresa" style="max-width: 100%; height: auto; border-radius: 12px;">
+</div>
+
+        <a href="index.html" class="btn">← Volver al Calendario</a>
+    </div>
+
+    <!-- Audio escondido apuntando a la carpeta 'musica' -->
+    <audio id="audioDia" src="22.mp3" preload="auto" loop style="display: none;"></audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const audio = document.getElementById("audioDia");
+            
+            // Reproduce la música automáticamente al abrir esta página de sorpresa
+            audio.play().catch(error => {
+                console.log("El navegador requirió interacción o bloqueó el audio:", error);
+            });
+        });
+    </script>
+
+
+</body>
+</html>

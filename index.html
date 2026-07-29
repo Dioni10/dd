@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Sorpresas 🌸</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf2f8;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .contenedor {
+            background-color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 700px;
+            margin: 30px auto;
+        }
+        h1 { color: #db2777; font-size: 28px; margin-bottom: 10px; }
+        p.intro { color: #666; margin-bottom: 30px; font-size: 16px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .dia-btn {
+            background-color: #fce7f3;
+            color: #be185d;
+            border: none;
+            padding: 18px 0;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dia-btn:hover {
+            transform: translateY(-3px);
+            background-color: #fbcfe8;
+        }
+        .dia-25 {
+            background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+            color: #831843;
+            grid-column: span 5;
+            font-size: 20px;
+        }
+        @media (max-width: 500px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+            .dia-25 { grid-column: span 3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>🌸 Cuenta Regresiva de Sorpresas</h1>
+        <p class="intro">Haz clic en cada día para descubrir un detalle especial pensado solo para ti.</p>
+        
+        <div class="grid">
+            <a href="dia1.html" class="dia-btn" data-dia="1">1</a>
+            <a href="dia2.html" class="dia-btn" data-dia="2">2</a>
+            <a href="dia3.html" class="dia-btn" data-dia="3">3</a>
+            <a href="dia4.html" class="dia-btn" data-dia="4">4</a>
+            <a href="dia5.html" class="dia-btn" data-dia="5">5</a>
+            <a href="dia6.html" class="dia-btn" data-dia="6">6</a>
+            <a href="dia7.html" class="dia-btn" data-dia="7">7</a>
+            <a href="dia8.html" class="dia-btn" data-dia="8">8</a>
+            <a href="dia9.html" class="dia-btn" data-dia="9">9</a>
+            <a href="dia10.html" class="dia-btn" data-dia="10">10</a>
+            <a href="dia11.html" class="dia-btn" data-dia="11">11</a>
+            <a href="dia12.html" class="dia-btn" data-dia="12">12</a>
+            <a href="dia13.html" class="dia-btn" data-dia="13">13</a>
+            <a href="dia14.html" class="dia-btn" data-dia="14">14</a>
+            <a href="dia15.html" class="dia-btn" data-dia="15">15</a>
+            <a href="dia16.html" class="dia-btn" data-dia="16">16</a>
+            <a href="dia17.html" class="dia-btn" data-dia="17">17</a>
+            <a href="dia18.html" class="dia-btn" data-dia="18">18</a>
+            <a href="dia19.html" class="dia-btn" data-dia="19">19</a>
+            <a href="dia20.html" class="dia-btn" data-dia="20">20</a>
+            <a href="dia21.html" class="dia-btn" data-dia="21">21</a>
+            <a href="dia22.html" class="dia-btn" data-dia="22">22</a>
+            <a href="dia23.html" class="dia-btn" data-dia="23">23</a>
+            <a href="dia24.html" class="dia-btn" data-dia="24">24</a>
+            <a href="dia25.html" class="dia-btn dia-25" data-dia="25">🎁 Día 25 - Detalle Final 🎶</a>
+        </div>
+    </div>
+
+    <!-- Audio escondido (reemplaza 'cancion.mp3' por tu archivo) -->
+    <audio id="audioFondo" src="cancion.mp3" preload="auto" loop style="display: none;"></audio>
+
+    <!-- Script de bloqueo de fechas y reproducción de música en los botones -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const cajas = document.querySelectorAll(".dia-btn");
+        const audio = document.getElementById("audioFondo");
+        const ahora = new Date();
+        const mesActual = fechaActual.getMonth(); // 7 es Agosto
+        const diaActual = ahora.getDate();
+
+        cajas.forEach(caja => {
+          const diaCaja = parseInt(caja.getAttribute("data-dia"));
+
+          if ((mesActual === 7 && diaActual >= diaCaja) || mesActual > 7) {
+            caja.style.pointerEvents = "auto";
+            caja.style.opacity = "1";
+
+            // Si el día está desbloqueado, al hacer clic reproduce la música antes de abrir el enlace
+            caja.addEventListener("click", () => {
+                audio.play().catch(error => {
+                    console.log("El navegador bloqueó la reproducción:", error);
+                });
+            });
+
+          } else {
+            caja.addEventListener("click", (e) => {
+              e.preventDefault(); 
+              alert("¡Este día aún está bloqueado! Espera a que llegue su fecha.");
+            });
+            caja.style.opacity = "0.5";
+            caja.style.filter = "grayscale(80%)";
+            caja.style.cursor = "not-allowed";
+          }
+        });
+      });
+    </script>
+
+    
+
+
+
+</body>
+</html>
