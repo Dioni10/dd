@@ -1,0 +1,9 @@
+.caja-sorpresa {
+  text-decoration: none; /* Quita la línea de los enlaces */
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.caja-sorpresa:hover {
+  transform: scale(1.05);
+}
